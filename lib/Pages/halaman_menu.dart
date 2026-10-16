@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
-import 'halaman_detail.dart'; // Import file detail tujuan navigasi
+import '../widgets/navbar.dart';
+import 'halaman_detail.dart';
+import 'halaman_profile.dart';
 
-class HalamanMenu extends StatelessWidget {
+class HalamanMenu extends StatefulWidget {
   const HalamanMenu({super.key});
+
+  @override
+  State<HalamanMenu> createState() => _HalamanMenuState();
+}
+
+class _HalamanMenuState extends State<HalamanMenu> {
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
+      appBar: AppBar(
+        title: const Text('Menu Perpustakaan'),
+        backgroundColor: Colors.blue,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -31,7 +44,7 @@ class HalamanMenu extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Halo, Muhammad Yusuf Islam!", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+                            Text("Halo, Yusuf Islam!", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
                             SizedBox(height: 4),
                             Text("Perpustakaan Kampus", style: TextStyle(color: Colors.white70, fontSize: 14)),
                           ],
@@ -79,7 +92,6 @@ class HalamanMenu extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   children: [
-                    
                     // ================= BARIS KE-1 =================
                     Row(
                       children: [
@@ -272,7 +284,6 @@ class HalamanMenu extends StatelessWidget {
                         ),
                       ],
                     ),
-
                   ],
                 ),
               ),
@@ -280,6 +291,17 @@ class HalamanMenu extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: CustomNavbar(
+        selectedIndex: currentIndex,
+        onDestinationSelected: (index) {
+          setState(() {
+            currentIndex = index;
+          });
+          if (index == 1 || index == 2) {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HalamanProfile()));
+          }
+        },
       ),
     );
   }
